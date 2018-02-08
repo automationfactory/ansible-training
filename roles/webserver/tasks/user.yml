@@ -1,0 +1,6 @@
+---
+
+- name: create administrative user
+  user: name={{ user }} password={{ password }}
+
+

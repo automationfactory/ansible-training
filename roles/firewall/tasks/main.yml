@@ -1,0 +1,37 @@
+- include: centos.yml
+  when: firewall_enabled|bool and ansible_distribution == 'CentOS'
+
+- include: debian.yml
+  when: firewall_enabled|bool and ansible_distribution == 'Debian'
+
+- name: "Ensure the iptables.d directory exists"
+  file: >
+    path=/etc/iptables.d
+    state=directory
+    mode=0700
+    owner=root
+    group=root
+  when: firewall_enabled|bool
+  tags:
+    - firewall
+
+- name: "Add the {{ caller_name }} firewall rules file"
+  template: >
+    src=roles/{{ caller_name }}/templates/iptables.j2
+    dest=/etc/iptables.d/{{ caller_name }}
+    mode=0600
+    backup=no
+    owner=root
+    group=root
+  when: firewall_enabled|bool
+  register: firewall_rule
+  tags:
+    - firewall
+    - files
+
+- name: "Reload the firewall"
+  firewall: >
+    state=reloaded
+  when: firewall_enabled|bool and firewall_rule|changed
+  tags:
+    - firewall

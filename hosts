@@ -1,0 +1,20 @@
+# This is the default ansible 'hosts' file.
+#
+# It should live in /etc/ansible/hosts
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+# Here's another example of host ranges, this time there are no
+# leading 0s:
+
+192.168.33.110 ansible_ssh_user=ubuntu ansible_ssh_password=ubuntu
+
+[db]
+192.168.33.160 ansible_ssh_user=ubuntu ansible_ssh_password=ubuntu
+[web]
+192.168.33.26 ansible_ssh_user=vagrant ansible_ssh_password=vagrant
+192.168.33.210 

@@ -1,0 +1,12 @@
+---
+- hosts: 192.168.33.35
+  user: vagrant
+  become: yes
+  tasks:
+  - name: copy file to tomcat server
+    copy: src=/home/vagrant/jenkins/Maven-petclinic-project/petclinic.war dest=/opt/apache-tomcat-8.0.48/webapps/
+
+  - name: start tomcat engine
+    command: "/opt/apache-tomcat-8.0.48/bin/catalina.sh start"
+
+- hosts: 

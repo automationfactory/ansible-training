@@ -1,0 +1,26 @@
+- name: "Install iptables-persistent"
+  apt: >
+    name=iptables-persistent
+    state=present
+  tags:
+    - firewall
+    - pkgs
+
+- name: "Install ip6tables rules"
+  template: >
+    src=ip6tables.j2
+    dest=/etc/iptables/rules.v6
+    owner=root
+    group=root
+    mode=0600
+  register: ip6tables_template
+  tags:
+    - firewall
+    - files
+
+- name: "Reload ip6tables rules"
+  shell: |
+    [ -e /sbin/ip6tables-restore ] && /sbin/ip6tables-restore < /etc/iptables/rules.v6
+  when: ip6tables_template|changed
+  tags:
+    - firewall

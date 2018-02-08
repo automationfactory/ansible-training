@@ -1,0 +1,46 @@
+- name: "Install iptables-services"
+  yum: >
+    name=iptables-services
+    state=present
+  when: ansible_distribution_major_version|int == 7
+  tags:
+    - firewall
+    - pkgs
+
+- name: "Disable firewalld"
+  service: >
+    name=firewalld
+    enabled=no
+    state=stopped
+  when: ansible_distribution_major_version|int == 7
+  ignore_errors: yes
+  tags:
+    - firewall
+
+- name: "Enable iptables"
+  service: >
+    name=iptables
+    enabled=yes
+    state=started
+  when: ansible_distribution_major_version|int == 7
+  tags:
+    - firewall
+
+- name: "Install ip6tables rules"
+  template: >
+    src=ip6tables.j2
+    dest=/etc/sysconfig/ip6tables
+    owner=root
+    group=root
+    mode=0600
+  register: ip6tables_template
+  tags:
+    - firewall
+    - files
+
+- name: "Reload ip6tables rules"
+  shell: |
+    [ -e /sbin/ip6tables-restore ] && /sbin/ip6tables-restore < /etc/sysconfig/ip6tables
+  when: ip6tables_template|changed
+  tags:
+    - firewall

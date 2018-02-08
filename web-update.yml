@@ -1,0 +1,16 @@
+---
+#- hosts: db
+#  remote_user: vagrant
+#  become: true
+#  gather_facts: true
+#  roles:
+#  - dbserver
+
+- hosts: web
+  remote_user: vagrant
+  become: true
+  gather_facts: true
+  roles:
+  - webserver
+
+

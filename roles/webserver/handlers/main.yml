@@ -1,0 +1,6 @@
+---
+- name: restart_webserver
+  when: ansible_os_family == 'RedHat'
+  service: name=httpd state=restarted
+#  when: ansible_os_family == 'Debian'
+#  service: name=apache2 state=restarted

@@ -1,0 +1,23 @@
+---
+- hosts: db
+  remote_user: vagrant
+  become: true
+  tasks:
+  - name: install dbserver
+    apt: name=mariadb-server state=latest
+  - name: ensure dbserver is running
+    service: name=mysql state=running
+
+- hosts: web
+  remote_user: vagrant
+  become: true
+  roles:
+  - webserver
+  - firewall   
+
+  tasks:
+  - name: install webserver application
+    apt: name=apache2 state=latest
+  - name: ensure webserver service is running
+    service: name=apache2 state=running
+
