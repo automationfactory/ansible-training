@@ -12,9 +12,19 @@
 # leading 0s:
 
 192.168.33.110 ansible_ssh_user=ubuntu ansible_ssh_password=ubuntu
+#node1 ansible_ssh-host=192.168.33.100
+
+[webserver]
+web[01:10].example.com
 
 [db]
 192.168.33.160 ansible_ssh_user=ubuntu ansible_ssh_password=ubuntu
+
 [web]
 192.168.33.26 ansible_ssh_user=vagrant ansible_ssh_password=vagrant
-192.168.33.210 
+#192.168.33.210 
+
+#[windows]
+#192.168.56.1
+#172.28.128.1
+#192.168.33.1
