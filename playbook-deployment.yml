@@ -1,0 +1,24 @@
+---
+- hosts: localhost
+  remote_user: ubuntu
+  become: true
+  gather_facts: false
+  tasks:
+  - name: clear the environment
+    file: 
+     name: petclinic.war
+     state: absent
+  - name: download package from artifactory server
+    command: wget http://35.196.201.46:8081/artifactory/abcbank-package/petclinic.war
+
+- hosts: appserver
+  remote_user: ubuntu
+  become: true
+  gather_facts: false
+  tasks:
+  - name: deploy war file to server
+    copy: 
+     src: /home/ubuntu/petclinic.war 
+     dest: /opt/apache-tomcat-8.5.30/webapps/petclinic.war
+  - name: restart app server
+    command: sh /opt/apache-tomcat-8.5.30/bin/catalina.sh start

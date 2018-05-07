@@ -11,8 +11,17 @@
 # Here's another example of host ranges, this time there are no
 # leading 0s:
 
-192.168.33.110 ansible_ssh_user=ubuntu ansible_ssh_password=ubuntu
+localhost
+
+[kubemaster]
+
+192.168.33.135 ansible_ssh_user=ubuntu ansible_ssh_password=ubuntu
+
+#192.168.33.110 ansible_ssh_user=ubuntu ansible_ssh_password=ubuntu
 #node1 ansible_ssh-host=192.168.33.100
+
+[appserver]
+192.168.33.22
 
 [webserver]
 web[01:10].example.com
