@@ -1,7 +1,5 @@
 ---
-- hosts: db
-  remote_user: vagrant
-  become: true
+- hosts: appserver
   gather_facts: false
   tasks:
   - name: install dbserver
@@ -9,9 +7,7 @@
   - name: ensure dbserver is running
     service: name=mysql state=running
 
-- hosts: web
-  remote_user: vagrant
-  become: true
+- hosts: webserver
   roles:
   - webserver
   - firewall   
